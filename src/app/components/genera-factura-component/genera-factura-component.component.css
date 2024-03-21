@@ -1,0 +1,108 @@
+.container
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height: 80vh;
+}
+
+h1
+{
+    margin-bottom: 5%;
+    font-size: 70px;
+}
+
+.buscar 
+{
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+  
+.buscar mat-form-field 
+{
+    width: 18%;
+    height: 8%;
+    margin-bottom: 4%;
+}
+
+.buscar mat-form-field.email
+{
+    width: 18%;
+    height: 8%;
+    margin-left: 4%;
+    margin-bottom: 4%;
+    
+}
+
+.btn_validar
+{
+    margin-bottom: 5.2%;
+}
+
+.card
+{
+    margin-left: 4%;
+    margin-right: 4%;
+    border: 1px solid #b1b0b0;
+    border-radius: 4px;
+    height: max-content;
+}
+.titulo
+{
+    
+    margin-left: 4.5%;
+}
+.card-body
+{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2%;
+    margin-top: 4%;
+}
+
+.form
+{
+    margin-right: 25px;
+}
+
+.form2
+{
+    margin-right: 2%;
+    width: 23%;
+}
+
+.filas
+{
+    margin-bottom: 15px;
+}
+
+.sizefield
+{
+    width: 25%;
+}
+
+.btnGenerar
+{
+    display: flex;
+    justify-content: end;
+}
+
+.margen
+{
+    margin-right: 0.5%;
+}
+
+.nota
+{
+    margin-bottom: 4%;
+    margin-top: 1%;
+    margin-left: 4%;
+}
