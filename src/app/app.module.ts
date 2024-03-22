@@ -20,11 +20,25 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { FooterComponent } from './components/footer/footer.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
+import { ConsultaFacturaComponentComponent } from './components/consulta-factura-component/consulta-factura-component.component';
+import { ManualComponentComponent } from './components/manual-component/manual-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GeneraFacturaComponentComponent
+    GeneraFacturaComponentComponent,
+    FooterComponent,
+    NavbarComponent,
+    SidenavComponent,
+    ConsultaFacturaComponentComponent,
+    ManualComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +56,11 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatCardModule,
     MatRadioModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatListModule
 
   ],
   providers: [
