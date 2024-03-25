@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 
 
 @Component({
@@ -9,6 +10,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 })
 export class GeneraFacturaComponentComponent implements OnInit{
+  // Primer pestaña
   ticketNumber: string = '';
   rfc: string = '';
   razon: string = '';
@@ -23,12 +25,11 @@ export class GeneraFacturaComponentComponent implements OnInit{
   calle: string= '';
   numE: string= '';
   numI: string= '';
-
   tipoPersona: string = '';
   typeperson: string[] = ['Fisica', 'Moral'];
 
-  onSubmit() {
-    // Proximamente se pude hacer la logica para enviar el formulario
+  onSubmit( ) {
+    // Aquí podrías enviar la factura al correo electrónico
     console.log('RFC:', this.rfc);
     console.log('Tipo de Persona:', this.tipoPersona);
     console.log('Razón Social:', this.razon);
@@ -44,13 +45,42 @@ export class GeneraFacturaComponentComponent implements OnInit{
     console.log('Número Exterior:', this.numE);
     console.log('Número Interior:', this.numI);
   }
+  // Termina primer pestaña
 
-  constructor() {}
+  // Segunda pestaña
+  formularioExtranjero!: FormGroup;
+  ticketNumberE: string = '';
+  
 
-  ngOnInit() {}
+
+
+  enviarExtranjero(){
+
+  }
+  // Termina segunda pestaña
+
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.buildFormExtranjero();
+  }
+
+  private buildFormExtranjero(){
+    this.formularioExtranjero = this.formBuilder.group({
+      // Se uso la "E" al final de cada variable por "Extranjero"
+        rfcE:['', Validators.required],
+        nombreE:['', Validators.required],
+        regimenFiscalE: ['', Validators.required],
+        usoDelCFDIE:['', Validators.required],
+        paisE:['', Validators.required],
+        pasaporteE:['', Validators.required]
+    });
+  }
+
 
   validate() {
-    // Aquí se implementara la lógica para despues poder validar sin un número preestablecido 
+    // Aquí se implementará la lógica para validar sin un número preestablecido 
     if (this.ticketNumber === '001') {
       alert('El número de ticket es válido');
     } else {

@@ -1,22 +1,25 @@
 <div class="container">
     <h1>Generar Factura</h1>
-
-    <div class="pestana">
+    <div>
         <!-- Primer pestaña correspondiente a Fisica/Moral -->
         <mat-tab-group > 
             <mat-tab  label = "Fisica/Moral"> 
-                <div class="buscar">
-
-                    <mat-form-field>
-                      <mat-label>Folio o Número de Ticket</mat-label>
-                      <input type="text" matInput [(ngModel)]="ticketNumber">
-                    </mat-form-field>
-                    <button class="btn_validar" mat-raised-button [color]="'primary'" (click)="validate()">Validar</button>
-
-                    <mat-form-field class="email">
-                        <mat-label>Correo Electrónico</mat-label>
-                        <input matInput>
-                    </mat-form-field>
+                <div class="topcard">
+                    <mat-grid-list cols="5" rowHeight="80px">
+                        <mat-grid-tile>
+                            <mat-form-field>
+                            <mat-label>Folio o Número de Ticket</mat-label>
+                            <input type="text" matInput [(ngModel)]="ticketNumber">
+                            </mat-form-field>
+                            <button class="btn_validar" mat-raised-button [color]="'primary'" (click)="validate()">Validar</button>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="email">
+                                <mat-label>Correo Electrónico</mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list>
                 </div>
                 <!-- <p class="titulo">Datos Fiscales</p> -->
                 <div class="card">
@@ -25,108 +28,133 @@
                     </div>
                     <div class="card-body">
                         <form (ngSubmit)="onSubmit()">
-                            <div class="filas">
-                                <mat-form-field appearance="fill" class="form">
-                                    <mat-label>RFC</mat-label>
-                                    <input matInput [(ngModel)]="rfc" name="rfc" required>
-                                </mat-form-field>
-                                
-                                <label id="example-radio-group-label">Tipo de Persona</label>
-                                <mat-radio-group aria-label="Tipo de Persona" [(ngModel)]="tipoPersona" name="tipoPersona" [ngModelOptions]="{standalone: true}" class="form">
-                                    @for (typeperson of typeperson; track typeperson) {
-                                        <mat-radio-button class="example-radio-button" [value]="typeperson">{{typeperson}}</mat-radio-button>
-                                    }
-                                </mat-radio-group>
-                                
-                                <mat-form-field appearance="fill" class="form">
-                                <mat-label>Nombre/Razón Social</mat-label>
-                                <input matInput [(ngModel)]="razon" name="razon" required>
-                                </mat-form-field>
+                            <div>
+                                <mat-grid-list cols="5" rowHeight="80px" >
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form">
+                                            <mat-label>RFC</mat-label>
+                                            <input matInput [(ngModel)]="rfc" name="rfc" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
 
-                                <mat-form-field appearance="fill" class="form">
-                                    <mat-label>Apellido Paterno</mat-label>
-                                    <input matInput [(ngModel)]="apellidoP" name="apellidoP" required>
-                                </mat-form-field>
+                                    <mat-grid-tile>
+                                        <label id="example-radio-group-label">Tipo de Persona</label>
+                                        <mat-radio-group aria-label="Tipo de Persona" [(ngModel)]="tipoPersona" name="tipoPersona" [ngModelOptions]="{standalone: true}" class="form">
+                                            @for (typeperson of typeperson; track typeperson) {
+                                                <mat-radio-button class="example-radio-button" [value]="typeperson">{{typeperson}}</mat-radio-button>
+                                            }
+                                        </mat-radio-group>
+                                    </mat-grid-tile>
 
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Apellido Materno</mat-label>
-                                    <input matInput [(ngModel)]="apellidoM" name="apellidoM" required>
-                                </mat-form-field>
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form">
+                                        <mat-label>Nombre/Razón Social</mat-label>
+                                        <input matInput [(ngModel)]="razon" name="razon" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form">
+                                            <mat-label>Apellido Paterno</mat-label>
+                                            <input matInput [(ngModel)]="apellidoP" name="apellidoP" required>
+                                        </mat-form-field>
+                                        </mat-grid-tile>
+                                    <mat-grid-tile>
+
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Apellido Materno</mat-label>
+                                            <input matInput [(ngModel)]="apellidoM" name="apellidoM" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                </mat-grid-list>
                             </div>
-
-                            <div class="filas">
-                                <mat-form-field class="form2">
-                                    <mat-label>Régimen Fiscal</mat-label>
-                                    <mat-select [(ngModel)]="regimenFiscal" [disabled]="disableSelect.value" name="regimenFiscal">
-                                      <mat-option value="option1">Option 1</mat-option>
-                                      <mat-option value="option2">Option 2</mat-option>
-                                      <!-- <mat-option value="option2" disabled>Option 2 (disabled)</mat-option> -->
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field class="form2">
-                                    <mat-label>Uso del CFDI</mat-label>
-                                    <mat-select [(ngModel)]="usoDelCFDI" [disabled]="disableSelect.value"  name="usoDelCFDI">
-                                      <mat-option value="option1">Option 1</mat-option>
-                                      <mat-option value="option2">Option 2</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                            <div>
+                                <mat-grid-list cols="5" rowHeight="80px" >
+                                    <mat-grid-tile>
+                                        <mat-form-field>
+                                            <mat-label>Régimen Fiscal</mat-label>
+                                            <mat-select [(ngModel)]="regimenFiscal" [disabled]="disableSelect.value" name="regimenFiscal">
+                                            <mat-option value="option1">Option 1</mat-option>
+                                            <mat-option value="option2">Option 2</mat-option>
+                                            <!-- <mat-option value="option2" disabled>Option 2 (disabled)</mat-option> -->
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field>
+                                            <mat-label>Uso del CFDI</mat-label>
+                                            <mat-select [(ngModel)]="usoDelCFDI" [disabled]="disableSelect.value"  name="usoDelCFDI">
+                                            <mat-option value="option1">Option 1</mat-option>
+                                            <mat-option value="option2">Option 2</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile></mat-grid-tile>
+                                    <mat-grid-tile></mat-grid-tile>
+                                    <mat-grid-tile></mat-grid-tile>
+                                </mat-grid-list>
                             </div>
-
-                            <div class="filas">
-
-                                <mat-form-field appearance="fill" class="form2">
-                                    <mat-label>Código Postal</mat-label>
-                                    <input matInput [(ngModel)]="cp" name="cp" required>
-                                </mat-form-field>
-
-                                <mat-form-field class="form2">
-                                    <mat-label>Estado</mat-label>
-                                    <mat-select [(ngModel)]="estado" [disabled]="disableSelect.value" name="estado">
-                                      <mat-option value="option1">Option 1</mat-option>
-                                      <mat-option value="option2">Option 2</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field class="form2">
-                                    <mat-label>Municipio</mat-label>
-                                    <mat-select [(ngModel)]="municipio" [disabled]="disableSelect.value"  name="municipio">
-                                      <mat-option value="option1">Option 1</mat-option>
-                                      <mat-option value="option2">Option 2</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="fill" class="sizefield">
-                                    <mat-label>Colonia</mat-label>
-                                    <input matInput [(ngModel)]="colonia" name="colonia" required>
-                                </mat-form-field>
-
+                            <div>
+                                <mat-grid-list cols="4" rowHeight="80px">
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Código Postal</mat-label>
+                                            <input matInput [(ngModel)]="cp" name="cp" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field>
+                                            <mat-label>Estado</mat-label>
+                                            <mat-select [(ngModel)]="estado" [disabled]="disableSelect.value" name="estado">
+                                            <mat-option value="option1">Option 1</mat-option>
+                                            <mat-option value="option2">Option 2</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field>
+                                            <mat-label>Municipio</mat-label>
+                                            <mat-select [(ngModel)]="municipio" [disabled]="disableSelect.value"  name="municipio">
+                                            <mat-option value="option1">Option 1</mat-option>
+                                            <mat-option value="option2">Option 2</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill">
+                                            <mat-label>Colonia</mat-label>
+                                            <input matInput [(ngModel)]="colonia" name="colonia" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                </mat-grid-list>
                             </div>
-
-                            <div class="filas">
-
-                                <mat-form-field appearance="fill" class="form2">
-                                    <mat-label>Calle</mat-label>
-                                    <input matInput [(ngModel)]="calle" name="calle" required>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="fill" class="form2">
-                                    <mat-label>Número Exterior</mat-label>
-                                    <input matInput [(ngModel)]="numE" name="numE" required>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="fill" class="form2">
-                                    <mat-label>Número Interior</mat-label>
-                                    <input matInput [(ngModel)]="numI" name="numI" required>
-                                </mat-form-field>
-
+                            <div>
+                                <mat-grid-list cols="4" rowHeight="80px">
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form2">
+                                            <mat-label>Calle</mat-label>
+                                            <input matInput [(ngModel)]="calle" name="calle" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form2">
+                                            <mat-label>Número Exterior</mat-label>
+                                            <input matInput [(ngModel)]="numE" name="numE" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <mat-form-field appearance="fill" class="form2">
+                                            <mat-label>Número Interior</mat-label>
+                                            <input matInput [(ngModel)]="numI" name="numI" required>
+                                        </mat-form-field>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile></mat-grid-tile>
+                                </mat-grid-list>
                             </div>
-
                             <div class="btnGenerar"> 
-                                <button mat-raised-button type="submit" class="margen">Cancelar</button>
+                                <button mat-raised-button type="button" class="margen">Cancelar</button>
                                 <button mat-raised-button type="submit">Generar</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -134,14 +162,15 @@
             </mat-tab> 
 
 
-            <!-- Segundo -->
-            <mat-tab  label = "Extranjero" > Contenido 2 </mat-tab> 
-
+            <!-- Segunda Pestaña -->
+            <mat-tab  label = "Extranjero" >
+        
+            </mat-tab> 
 
             <!-- Tercero -->
-            <mat-tab  label = "Acreditar Propiedad" > Contenido 3 </mat-tab> 
+            <mat-tab  label = "Acreditar Propiedad" >
+
+            </mat-tab> 
         </mat-tab-group >
     </div>
-
 </div>
-  

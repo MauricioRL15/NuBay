@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { GeneraFacturaComponentComponent } from './components/genera-factura-component/genera-factura-component.component';
 import { ConsultaFacturaComponentComponent } from './components/consulta-factura-component/consulta-factura-component.component';
 import { ManualComponentComponent } from './components/manual-component/manual-component.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const routes: Routes = [
-  {path:'', redirectTo: '', pathMatch: 'full'},
-  {path: '', component:GeneraFacturaComponentComponent},
+  {path:'', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'genera', component:GeneraFacturaComponentComponent},
   {path: 'consulta', component:ConsultaFacturaComponentComponent},
   {path: 'manual', component:ManualComponentComponent},
+  {path: 'home', component:HomeComponent},
 ];
 
 @NgModule({

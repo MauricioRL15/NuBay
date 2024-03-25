@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -29,6 +31,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import { ConsultaFacturaComponentComponent } from './components/consulta-factura-component/consulta-factura-component.component';
 import { ManualComponentComponent } from './components/manual-component/manual-component.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -38,12 +41,14 @@ import { ManualComponentComponent } from './components/manual-component/manual-c
     NavbarComponent,
     SidenavComponent,
     ConsultaFacturaComponentComponent,
-    ManualComponentComponent
+    ManualComponentComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     //Angular Material
     MatTableModule,
     MatPaginatorModule,
@@ -60,7 +65,8 @@ import { ManualComponentComponent } from './components/manual-component/manual-c
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule
 
   ],
   providers: [
