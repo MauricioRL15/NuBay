@@ -10,6 +10,7 @@
 {
     margin-left: 1%;
     margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .card
@@ -66,3 +67,14 @@ mat-form-field{
 
 }
 
+.btn_validar
+{
+    display: flex;
+    align-items: center;
+    margin-bottom: 6.5%;
+}
+
+.topheader
+{
+    width: 100%;
+}

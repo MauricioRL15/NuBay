@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-
-
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -11,70 +10,124 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class GeneraFacturaComponentComponent implements OnInit{
   // Primer pestaña
-  ticketNumber: string = '';
-  rfc: string = '';
-  razon: string = '';
-  apellidoP: string = '';
-  apellidoM: string = '';
-  regimenFiscal: string= '';
-  usoDelCFDI: string= '';
-  cp: string= '';
-  estado: string= '';
-  municipio: string= '';
-  colonia: string= '';
-  calle: string= '';
-  numE: string= '';
-  numI: string= '';
-  tipoPersona: string = '';
+  formularioFisicaM!: FormGroup;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
   typeperson: string[] = ['Fisica', 'Moral'];
+  ticketNumber:string = '';
+  matcher = new MyErrorStateMatcher();
+
 
   onSubmit( ) {
-    // Aquí podrías enviar la factura al correo electrónico
-    console.log('RFC:', this.rfc);
-    console.log('Tipo de Persona:', this.tipoPersona);
-    console.log('Razón Social:', this.razon);
-    console.log('Apellido Paterno:', this.apellidoP);
-    console.log('Apellido Materno:', this.apellidoM);
-    console.log('Régimen Fiscal:', this.regimenFiscal);
-    console.log('Uso del CFDI:', this.usoDelCFDI);
-    console.log('Código Postal:', this.cp);
-    console.log('Estado:', this.estado);
-    console.log('Municipio:', this.municipio);
-    console.log('Colonia:', this.colonia);
-    console.log('Calle:', this.calle);
-    console.log('Número Exterior:', this.numE);
-    console.log('Número Interior:', this.numI);
+    if (this.formularioFisicaM.valid) {
+      const formData = this.formularioFisicaM.value;
+      console.log('Datos del formulario:', formData); 
+      alert('Formulario enviado correctamente');
+      this.formularioFisicaM.reset();
+    } else {
+      alert('Por favor, completa el formulario correctamente antes de enviarlo.');
+    }
   }
   // Termina primer pestaña
+
 
   // Segunda pestaña
   formularioExtranjero!: FormGroup;
   ticketNumberE: string = '';
-  
 
 
 
-  enviarExtranjero(){
-
+  submitExtranjero(){
+    if (this.formularioExtranjero.valid) {
+      const formData = this.formularioExtranjero.value;
+      console.log('Datos del formulario:', formData); 
+      alert('Formulario enviado correctamente');
+      this.formularioExtranjero.reset();
+    } else {
+      alert('Por favor, completa el formulario correctamente antes de enviarlo.');
+    }
   }
   // Termina segunda pestaña
 
+  //tercer pestaña
+  formularioAcreditarP!: FormGroup;
+
+  submitAcreditarP(){
+    if (this.formularioAcreditarP.valid) {
+      const formData = this.formularioAcreditarP.value;
+      console.log('Datos del formulario:', formData); 
+      alert('Formulario enviado correctamente');
+      this.formularioAcreditarP.reset();
+    } else {
+      alert('Por favor, completa el formulario correctamente antes de enviarlo.');
+    }
+  }
+
+  //termina tercer pestaña
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.buildFormExtranjero();
+    this.buildFormFisicaM();
+    this.buildFormAcreditarP();
   }
 
+  //primer pestaña
+  private buildFormFisicaM(){
+    this.formularioFisicaM = this.formBuilder.group({
+      // ticketNumber: [{ value: '', disabled: false }, Validators.required],
+      rfc: [{ value: '', disabled: false }, Validators.required],
+      razon: [{ value: '', disabled: false }, Validators.required],
+      apellidoP: [{ value: '', disabled: false }, Validators.required],
+      apellidoM: [{ value: '', disabled: false }, Validators.required],
+      regimenFiscal: [{ value: '', disabled: false }, Validators.required],
+      usoDelCFDI: [{ value: '', disabled: false }, Validators.required],
+      cp: [{ value: '', disabled: false }, Validators.required],
+      estado: [{ value: '', disabled: false }, Validators.required],
+      municipio: [{ value: '', disabled: false }, Validators.required],
+      colonia: [{ value: '', disabled: false }, Validators.required],
+      calle: [{ value: '', disabled: false }, Validators.required],
+      numE: [{ value: '', disabled: false }, Validators.required],
+      numI: [{ value: '', disabled: false }, Validators.required],
+      tipoPersona: [{ value: '', disabled: false }, Validators.required],
+      email: this.emailFormControl
+    });
+  }
+  //Form de primer pestaña
+
+  //Segundo Formulario
   private buildFormExtranjero(){
     this.formularioExtranjero = this.formBuilder.group({
       // Se uso la "E" al final de cada variable por "Extranjero"
-        rfcE:['', Validators.required],
-        nombreE:['', Validators.required],
-        regimenFiscalE: ['', Validators.required],
-        usoDelCFDIE:['', Validators.required],
-        paisE:['', Validators.required],
-        pasaporteE:['', Validators.required]
+      ticketNumberE: [''],
+      rfcE:['', Validators.required],
+      nombreE:['', Validators.required],
+      regimenFiscalE: ['', Validators.required],
+      usoDelCFDIE:['', Validators.required],
+      paisE:['', Validators.required],
+      pasaporteE:['', Validators.required]
+    });
+  }
+
+  //Tercer Formulario
+  private buildFormAcreditarP(){
+    this.formularioAcreditarP = this.formBuilder.group({
+      ticketNumberAP: [{ value: '', disabled: false }, Validators.required],
+      rfcAP: [{ value: '', disabled: false }, Validators.required],
+      nombreAP: [{ value: '', disabled: false }, Validators.required],
+      regimenFiscalAP: [{ value: '', disabled: false }, Validators.required],
+      usoDelCFDIAP: [{ value: '', disabled: false }, Validators.required],
+      codigoPostalAP: [{ value: '', disabled: false }, Validators.required],
+      estadoAP: [{ value: '', disabled: false }, Validators.required],
+      municipioAP: [{ value: '', disabled: false }, Validators.required],
+      coloniaAP: [{ value: '', disabled: false }, Validators.required],
+      calleAP: [{ value: '', disabled: false }, Validators.required],
+      numEAP: [{ value: '', disabled: false }, Validators.required],
+      numIAP: [{ value: '', disabled: false }, Validators.required],
+      email: this.emailFormControl
     });
   }
 
@@ -88,7 +141,32 @@ export class GeneraFacturaComponentComponent implements OnInit{
     }
   }
 
+  validar(){
+    if (this.ticketNumberE === '002') {
+      alert('El número de ticket es válido');
+    } else {
+      alert('El número de ticket no es válido');
+    }
+  }
+
+  validarticket(){
+    if (this.ticketNumberE === '003') {
+      alert('El número de ticket es válido');
+    } else {
+      alert('El número de ticket no es válido');
+    }
+  }
+
   // disableSelect = new FormControl(false);
   disableSelect = { value: false };
 
 }
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+
