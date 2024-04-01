@@ -1,0 +1,266 @@
+<div class="container">
+    <h1>Generar Factura Global</h1>
+
+    <div class="">
+        <mat-form-field class="mat-form-field2">
+            <mat-label>Sucursal</mat-label>
+            <mat-select>
+              <mat-option value="one">Sucursal 1</mat-option>
+              <mat-option value="two">Sucursal 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field2">
+            <mat-label>Rango de fechas</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Fecha inicial">
+              <input matEndDate placeholder="Fecha final">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+        
+    <div class="tablas">
+        <mat-grid-list cols="2" rowHeight="400px">
+
+            <mat-grid-tile>
+                <div class="ingresos">
+                    <p>Ingresos</p>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)"
+                                        [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                        </ng-container>
+                    
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="selection.toggle(row)">
+                        </tr>
+                    </table>
+                    <h3>
+                        Total Ingresos
+                    </h3>
+                    <p>$0.00</p>
+                </div>
+            </mat-grid-tile>
+            
+            <mat-grid-tile>
+                <div class="egresos">
+                    <p>Egresos</p>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)"
+                                        [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </td>
+                        </ng-container>
+                    
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Weight </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="selection.toggle(row)">
+                        </tr>
+                    </table>
+                    <h3>
+                        Total Egresos
+                    </h3>
+                    <p>$0.00</p>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    <div>
+        <form [formGroup]="formularioAcreditarP" (ngSubmit)="onSubmit()">
+            <div class="card">
+                <div class="card-header">
+                    <p class="titleCard">Datos Fiscales</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <mat-grid-list cols="4" rowHeight="80px" >
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>RFC</mat-label>
+                                    <input matInput formControlName="rfcAP" name="rfcAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput formControlName="nombreAP" name="nombreAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+                            
+                            <mat-grid-tile>
+                                <mat-form-field>
+                                    <mat-label>Régimen Fiscal</mat-label>
+                                    <mat-select formControlName="regimenFiscalAP" [disabled]="disableSelect.value" name="regimenFiscalAP">
+                                    <mat-option value="option1">Sin Obligaciones Fiscales</mat-option>
+                                    <!-- <mat-option value="option2">Option 2</mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field>
+                                    <mat-label>Uso del CFDI</mat-label>
+                                    <mat-select formControlName="usoDelCFDIAP" [disabled]="disableSelect.value" name="usoDelCFDIAP">
+                                    <mat-option value="option1">Sin Efectos Fiscales</mat-option>
+                                    <!-- <mat-option value="option2">Option 2</mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                        </mat-grid-list>
+                    </div>
+                    <div>
+                        <mat-grid-list cols="4" rowHeight="80px">
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Código Postal</mat-label>
+                                    <input matInput formControlName="codigoPostalAP" name="codigoPostalAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field>
+                                    <mat-label>Estado</mat-label>
+                                    <mat-select formControlName="estadoAP" [disabled]="disableSelect.value" name="estadoAP">
+                                    <mat-option value="option1">Option 1</mat-option>
+                                    <mat-option value="option2">Option 2</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-grid-tile>
+                            
+                            <mat-grid-tile>
+                                <mat-form-field>
+                                    <mat-label>Municipio</mat-label>
+                                    <mat-select formControlName="municipioAP" [disabled]="disableSelect.value"  name="municipioAP">
+                                    <mat-option value="option1">Option 1</mat-option>
+                                    <mat-option value="option2">Option 2</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Colonia</mat-label>
+                                    <input matInput formControlName="coloniaAP" name="coloniaAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+                            
+                        </mat-grid-list>
+                    </div>
+                    <div>
+                        <mat-grid-list cols="4" rowHeight="80px">
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Calle</mat-label>
+                                    <input matInput formControlName="calleAP" name="calleAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Número Exterior</mat-label>
+                                    <input matInput formControlName="numEAP" name="numEAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile>
+                                <mat-form-field appearance="fill" class="form">
+                                    <mat-label>Número Interior</mat-label>
+                                    <input matInput formControlName="numIAP" name="numIAP" required>
+                                </mat-form-field>
+                            </mat-grid-tile>
+
+                            <mat-grid-tile></mat-grid-tile>
+                        </mat-grid-list>
+                    </div>
+                    <div class="btnGenerar"> 
+                        <button mat-raised-button type="button" class="margen">Cancelar</button>
+                        <button mat-raised-button type="button" (click)="submitAcreditarP()">Generar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,55 @@
+.container
+{
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.topcard
+{
+    margin-left: 1%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.tabla
+{
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 4%;
+    margin-top: 4%;
+}
+
+.topheader
+{
+    width: 100%;
+}
+
+mat-form-field{
+    margin-bottom: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+    width: 96%;
+}
+
+.btnGenerar
+{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 2%;
+    margin-right: 4%;
+    margin-top: 4%;
+}
+
+.margen
+{
+    margin-right: 0.5%;
+}
+
+.btn_validar
+{
+    display: flex;
+    align-items: center;
+    margin-bottom: 6.5%;
+}

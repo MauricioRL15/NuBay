@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { GeneraFacturaComponentComponent } from './components/genera-factura-component/genera-factura-component.component';
-
+import { MatNativeDateModule } from '@angular/material/core';
 //Módulos de Angular Material
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -32,6 +32,8 @@ import {MatListModule} from '@angular/material/list';
 import { ConsultaFacturaComponentComponent } from './components/consulta-factura-component/consulta-factura-component.component';
 import { ManualComponentComponent } from './components/manual-component/manual-component.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { GeneraFacturaGlobalComponent } from './components/genera-factura-component/genera-factura-global/genera-factura-global.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -42,13 +44,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
     SidenavComponent,
     ConsultaFacturaComponentComponent,
     ManualComponentComponent,
-    HomeComponent
+    HomeComponent,
+    GeneraFacturaGlobalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     //Angular Material
     MatTableModule,
     MatPaginatorModule,
@@ -66,7 +70,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatToolbarModule,
     MatMenuModule,
     MatListModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule
 
   ],
   providers: [

@@ -4,6 +4,7 @@ import { GeneraFacturaComponentComponent } from './components/genera-factura-com
 import { ConsultaFacturaComponentComponent } from './components/consulta-factura-component/consulta-factura-component.component';
 import { ManualComponentComponent } from './components/manual-component/manual-component.component';
 import { HomeComponent } from './components/home/home.component';
+import { GeneraFacturaGlobalComponent } from './components/genera-factura-component/genera-factura-global/genera-factura-global.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'consulta', component:ConsultaFacturaComponentComponent},
   {path: 'manual', component:ManualComponentComponent},
   {path: 'home', component:HomeComponent},
+  {path: 'generaGlobal', component:GeneraFacturaGlobalComponent},
 ];
 
 @NgModule({
