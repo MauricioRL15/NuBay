@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketValidationComponentComponent } from '../ticket-validation-component/ticket-validation-component.component';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -16,7 +18,8 @@ export class GeneraFacturaComponentComponent implements OnInit{
     Validators.email
   ]);
   typeperson: string[] = ['Fisica', 'Moral'];
-  ticketNumber:string = '';
+  ticketNumber!:string;
+  ticketExists: boolean = false;
   matcher = new MyErrorStateMatcher();
 
 
@@ -67,7 +70,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   //termina tercer pestaña
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.buildFormExtranjero();
@@ -78,7 +81,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
   //primer pestaña
   private buildFormFisicaM(){
     this.formularioFisicaM = this.formBuilder.group({
-      // ticketNumber: [{ value: '', disabled: false }, Validators.required],
+      ticketNumber: [{ value: '', disabled: false }, Validators.required],
       rfc: [{ value: '', disabled: false }, Validators.required],
       razon: [{ value: '', disabled: false }, Validators.required],
       apellidoP: [{ value: '', disabled: false }, Validators.required],
@@ -132,15 +135,6 @@ export class GeneraFacturaComponentComponent implements OnInit{
   }
 
 
-  validate() {
-    // Aquí se implementará la lógica para validar sin un número preestablecido 
-    if (this.ticketNumber === '001') {
-      alert('El número de ticket es válido');
-    } else {
-      alert('El número de ticket no es válido');
-    }
-  }
-
   validar(){
     if (this.ticketNumberE === '002') {
       alert('El número de ticket es válido');
@@ -159,6 +153,24 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   // disableSelect = new FormControl(false);
   disableSelect = { value: false };
+
+  openValidationModal(): void {
+    const ticketNumberControl = this.formularioFisicaM.get('ticketNumber');
+    const ticketNumberValue = ticketNumberControl ? ticketNumberControl.value : null;
+  
+    const dialogRef = this.dialog.open(TicketValidationComponentComponent, {
+      width: '250px',
+      data: { ticketNumber: ticketNumberValue }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (this.formularioFisicaM && ticketNumberControl) {
+        ticketNumberControl.setValue('');
+      }
+    });
+  }
+
 
 }
 

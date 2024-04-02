@@ -12,10 +12,11 @@
                                 <mat-label>Folio o Número de Ticket</mat-label>
                                 <input type="text" matInput formControlName="ticketNumber" name="ticketNumber" required>
                                 </mat-form-field>
-                                <button class="btn_validar" mat-raised-button [color]="'primary'" type="button" (click)="validate()">Validar</button>
+                                <button class="btn_validar" mat-raised-button [color]="'primary'" type="button" (click)="openValidationModal()">Validar</button>
+                        
                             </mat-grid-tile>
                             
-                            <mat-grid-tile colspan="2">
+                            <mat-grid-tile colspan="2" >
                                 <mat-form-field class="topheader">
                                     <mat-label>Correo Electrónico</mat-label>
                                     <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" placeholder="Ex. mau@example.com">
@@ -31,7 +32,7 @@
                             <mat-grid-tile colspan="7"></mat-grid-tile>
                         </mat-grid-list>
                     </div>
-                    <div class="card">
+                    <div class="card" >
                         <div class="card-header">
                             <p class="titleCard">Datos Fiscales</p>
                         </div>
@@ -164,7 +165,7 @@
                         </div>
                     </div>
                 </form>
-                    <p class="nota">Nota: Confirmar que sus datos fiscales esten conforme a su Constancia de Situacion Fiscal.</p>          
+                    <p class="nota" >Nota: Confirmar que sus datos fiscales esten conforme a su Constancia de Situacion Fiscal.</p>          
             </mat-tab> 
 
 

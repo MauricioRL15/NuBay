@@ -34,6 +34,8 @@ import { ManualComponentComponent } from './components/manual-component/manual-c
 import {MatGridListModule} from '@angular/material/grid-list';
 import { GeneraFacturaGlobalComponent } from './components/genera-factura-component/genera-factura-global/genera-factura-global.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import { TicketValidationComponentComponent } from './components/ticket-validation-component/ticket-validation-component.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ConsultaFacturaComponentComponent,
     ManualComponentComponent,
     HomeComponent,
-    GeneraFacturaGlobalComponent
+    GeneraFacturaGlobalComponent,
+    TicketValidationComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatMenuModule,
     MatListModule,
     MatGridListModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule
 
   ],
   providers: [

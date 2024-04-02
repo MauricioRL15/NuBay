@@ -7,7 +7,6 @@
 }
 
 .tablas{
-    margin-top: 1%;
     width: 100%;
 }
 
@@ -39,7 +38,7 @@ mat-form-field{
 
 .card
 {
-    margin-left: 5%;
+    margin-left: 2%;
     margin-right: 2%;
     margin-top: 1.5%;
     border: 1px solid #b1b0b0;
