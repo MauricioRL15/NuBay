@@ -1,12 +1,12 @@
 <h2 mat-dialog-title>Validación de Ticket</h2>
 <div mat-dialog-content>
-  <p *ngIf="ticketNumber === '001'; else noExistMessage">Factura existente</p>
+  <p *ngIf="ticketNumber === '001'; else noExistMessage">Ticket valido, Genere su factura!</p>
   <ng-template #noExistMessage>
-    <p>No existe esta factura</p>
+    <p>No existe este folio</p>
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button *ngIf="ticketNumber === '001'" (click)="closeDialog()">Cerrar</button>
-  <button mat-button *ngIf="ticketNumber !== '001'" (click)="cancel()">Cancelar</button>
-  <button mat-button *ngIf="ticketNumber !== '001'" (click)="generate()">Generar</button>
+  <button mat-button *ngIf="ticketNumber !== '001'" (click)="closeDialog()">Cerrar</button>
+  <button mat-button *ngIf="ticketNumber === '001'" (click)="cancel()">Cancelar</button>
+  <button mat-button *ngIf="ticketNumber === '001'" (click)="generate()">Generar</button>
 </div>

@@ -19,7 +19,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
   ]);
   typeperson: string[] = ['Fisica', 'Moral'];
   ticketNumber!:string;
-  ticketExists: boolean = false;
+  // ticketExists: boolean = false;
   matcher = new MyErrorStateMatcher();
 
 
@@ -38,7 +38,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   // Segunda pestaña
   formularioExtranjero!: FormGroup;
-  ticketNumberE: string = '';
+  ticketNumberE!: string;
 
 
 
@@ -95,7 +95,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
       calle: [{ value: '', disabled: false }, Validators.required],
       numE: [{ value: '', disabled: false }, Validators.required],
       numI: [{ value: '', disabled: false }, Validators.required],
-      tipoPersona: [{ value: '', disabled: false }, Validators.required],
+      tipoPersona: [{ value: 'Fisica', disabled: false }, Validators.required],
       email: this.emailFormControl
     });
   }
@@ -135,22 +135,6 @@ export class GeneraFacturaComponentComponent implements OnInit{
   }
 
 
-  validar(){
-    if (this.ticketNumberE === '002') {
-      alert('El número de ticket es válido');
-    } else {
-      alert('El número de ticket no es válido');
-    }
-  }
-
-  validarticket(){
-    if (this.ticketNumberE === '003') {
-      alert('El número de ticket es válido');
-    } else {
-      alert('El número de ticket no es válido');
-    }
-  }
-
   // disableSelect = new FormControl(false);
   disableSelect = { value: false };
 
@@ -169,7 +153,42 @@ export class GeneraFacturaComponentComponent implements OnInit{
         ticketNumberControl.setValue('');
       }
     });
+    }
+
+  openValidationModalE(): void {
+    const ticketNumberControl = this.formularioExtranjero.get('ticketNumberE');
+    const ticketNumberValue = ticketNumberControl ? ticketNumberControl.value : null;
+
+    const dialogRef = this.dialog.open(TicketValidationComponentComponent, {
+      width: '250px',
+      data: { ticketNumber: ticketNumberValue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (this.formularioExtranjero && ticketNumberControl) {
+        ticketNumberControl.setValue('');
+      }
+     });
   }
+
+  openValidationModalAP(): void {
+    const ticketNumberControl = this.formularioAcreditarP.get('ticketNumberAP');
+    const ticketNumberValue = ticketNumberControl ? ticketNumberControl.value : null;
+
+    const dialogRef = this.dialog.open(TicketValidationComponentComponent, {
+      width: '250px',
+      data: { ticketNumber: ticketNumberValue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (this.formularioAcreditarP && ticketNumberControl) {
+        ticketNumberControl.setValue('');
+      }
+     });
+  }
+
 
 
 }
