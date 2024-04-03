@@ -36,6 +36,7 @@ import { GeneraFacturaGlobalComponent } from './components/genera-factura-compon
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import { TicketValidationComponentComponent } from './components/ticket-validation-component/ticket-validation-component.component';
+import { ConsultaFacturaGlobalComponent } from './components/consulta-factura-component/consulta-factura-global/consulta-factura-global.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { TicketValidationComponentComponent } from './components/ticket-validati
     ManualComponentComponent,
     HomeComponent,
     GeneraFacturaGlobalComponent,
-    TicketValidationComponentComponent
+    TicketValidationComponentComponent,
+    ConsultaFacturaGlobalComponent
   ],
   imports: [
     BrowserModule,

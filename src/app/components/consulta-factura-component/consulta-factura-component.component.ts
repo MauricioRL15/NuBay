@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketValidationComponentComponent } from '../ticket-validation-component/ticket-validation-component.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -30,10 +32,55 @@ const ELEMENT_DATA: ConsultaFactura[] = [
 })
 export class ConsultaFacturaComponentComponent {
 
+  formularioConsultaFactura!: FormGroup;
+  ticketNumber:string='';
+
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   
   displayedColumns: string[] = ['ticket', 'rfc', 'fecha', 'descargar'];
   dataSource = ELEMENT_DATA;
+
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.buildFormConsulta();
+  }
+
+  private buildFormConsulta(){
+    this.formularioConsultaFactura = this.formBuilder.group({
+      ticketNumber: [{ value: '', disabled: false }, Validators.required],
+      email: this.emailFormControl
+    });
+  }
+
+  onSubmit( ) {
+    if (this.formularioConsultaFactura.valid) {
+      const formData = this.formularioConsultaFactura.value;
+      console.log('Datos del formulario:', formData); 
+      alert('Formulario enviado correctamente');
+      this.formularioConsultaFactura.reset();
+    } else {
+      alert('Por favor, completa el formulario correctamente antes de enviarlo.');
+    }
+  }
+
+
+  openValidationModal(): void {
+    const ticketNumberControl = this.formularioConsultaFactura.get('ticketNumber');
+    const ticketNumberValue = ticketNumberControl ? ticketNumberControl.value : null;
+  
+    const dialogRef = this.dialog.open(TicketValidationComponentComponent, {
+      width: '250px',
+      data: { ticketNumber: ticketNumberValue }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (this.formularioConsultaFactura && ticketNumberControl) {
+        ticketNumberControl.setValue('');
+      }
+    });
+  }
 
 }
