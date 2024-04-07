@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validat
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketValidationComponentComponent } from '../ticket-validation-component/ticket-validation-component.component';
+import { ApiService } from '../../services/api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -13,6 +15,11 @@ import { TicketValidationComponentComponent } from '../ticket-validation-compone
 export class GeneraFacturaComponentComponent implements OnInit{
   // Primer pestaña
   formularioFisicaM!: FormGroup;
+  regimenFiscalData: any[] = [];
+ 
+  
+  usoCFDI: any[] = [];
+
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
@@ -70,11 +77,16 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   //termina tercer pestaña
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {}
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private apiService: ApiService, private http: HttpClient,) {}
 
   ngOnInit(): void {
     this.buildFormExtranjero();
+
     this.buildFormFisicaM();
+    this.loadRegimenFiscalOptions();
+    this.loadUsoCFDIOptions();
+
+
     this.buildFormAcreditarP();
   }
 
@@ -86,8 +98,8 @@ export class GeneraFacturaComponentComponent implements OnInit{
       razon: [{ value: '', disabled: false }, Validators.required],
       apellidoP: [{ value: '', disabled: false }, Validators.required],
       apellidoM: [{ value: '', disabled: false }, Validators.required],
-      regimenFiscal: [{ value: '', disabled: false }, Validators.required],
-      usoDelCFDI: [{ value: '', disabled: false }, Validators.required],
+      regimenFiscal: [null, Validators.required],
+      usoDelCFDI: [{ value: '', disabled: false }],
       cp: [{ value: '', disabled: false }, Validators.required],
       estado: [{ value: '', disabled: false }, Validators.required],
       municipio: [{ value: '', disabled: false }, Validators.required],
@@ -95,10 +107,28 @@ export class GeneraFacturaComponentComponent implements OnInit{
       calle: [{ value: '', disabled: false }, Validators.required],
       numE: [{ value: '', disabled: false }, Validators.required],
       numI: [{ value: '', disabled: false }, Validators.required],
-      tipoPersona: [{ value: 'Fisica', disabled: false }, Validators.required],
+      tipoPersona: ['Fisica', Validators.required],
       email: this.emailFormControl
     });
   }
+
+  loadRegimenFiscalOptions() {
+    this.apiService.getRegimenFiscal().subscribe(data => {
+      this.regimenFiscalData = data;
+    });
+  }
+
+  loadUsoCFDIOptions() {
+    this.apiService.getUsoCFDI().subscribe(data => {
+      this.usoCFDI = data;
+    });
+  }
+
+  trackByFn(index: number, item: any) {
+    return item.valor; // Track by regimen's valor property
+  }
+
+
   //Form de primer pestaña
 
   //Segundo Formulario
@@ -136,7 +166,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
 
   // disableSelect = new FormControl(false);
-  disableSelect = { value: false };
+  //disableSelect = { value: false };
 
   openValidationModal(): void {
     const ticketNumberControl = this.formularioFisicaM.get('ticketNumber');

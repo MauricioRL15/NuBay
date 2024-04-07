@@ -80,19 +80,28 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Régimen Fiscal</mat-label>
-                                            <mat-select formControlName="regimenFiscal" [disabled]="disableSelect.value" name="regimenFiscal">
-                                            <mat-option value="option1">Option 1</mat-option>
-                                            <mat-option value="option2">Option 2</mat-option>
-                                            <!-- <mat-option value="option2" disabled>Option 2 (disabled)</mat-option> -->
+                                            <mat-select formControlName="regimenFiscal">
+                                                <mat-option *ngFor="let regimen of regimenFiscalData" [value]="regimen.cRF_RegimenFiscal">
+                                                    {{ regimen.cRF_RegimenFiscal }} - {{ regimen.cRF_Descripcion }}
+                                                </mat-option>
                                             </mat-select>
                                         </mat-form-field>
+
+                                        
+
+                                        <!-- <mat-form-field>
+                                            <mat-label>Favorite food</mat-label>
+                                            <mat-select>
+                                              <mat-option *ngFor="let regimen of regimenFiscalData; trackBy: trackByFn"
+                                                           [value]="regimen.valor">{{ regimen.cRF_Descripcion }}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field> -->
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Uso del CFDI</mat-label>
-                                            <mat-select formControlName="usoDelCFDI" [disabled]="disableSelect.value"  name="usoDelCFDI">
-                                            <mat-option value="option1">Option 1</mat-option>
-                                            <mat-option value="option2">Option 2</mat-option>
+                                            <mat-select formControlName="usoDelCFDI"  name="usoDelCFDI">
+                                                <mat-option *ngFor="let uso of usoCFDI" [value]="uso.cUCFDI_Clave">{{ uso.cUCFDI_Clave }}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
@@ -112,7 +121,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Estado</mat-label>
-                                            <mat-select formControlName="estado" [disabled]="disableSelect.value" name="estado">
+                                            <mat-select formControlName="estado"  name="estado">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -121,7 +130,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Municipio</mat-label>
-                                            <mat-select formControlName="municipio" [disabled]="disableSelect.value"  name="municipio">
+                                            <mat-select formControlName="municipio"   name="municipio">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -222,7 +231,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Régimen Fiscal</mat-label>
-                                            <mat-select formControlName="regimenFiscalE" [disabled]="disableSelect.value" name="regimenFiscal">
+                                            <mat-select formControlName="regimenFiscalE"  name="regimenFiscal">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -232,7 +241,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Uso del CFDI</mat-label>
-                                            <mat-select formControlName="usoDelCFDIE" [disabled]="disableSelect.value" name="usoDelCFDIE">
+                                            <mat-select formControlName="usoDelCFDIE"  name="usoDelCFDIE">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -247,7 +256,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>País</mat-label>
-                                            <mat-select formControlName="paisE" [disabled]="disableSelect.value"  name="paisE">
+                                            <mat-select formControlName="paisE"   name="paisE">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -326,7 +335,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Régimen Fiscal</mat-label>
-                                            <mat-select formControlName="regimenFiscalAP" [disabled]="disableSelect.value" name="regimenFiscalAP">
+                                            <mat-select formControlName="regimenFiscalAP"  name="regimenFiscalAP">
                                             <mat-option value="option1">Sin Obligaciones Fiscales</mat-option>
                                             <!-- <mat-option value="option2">Option 2</mat-option> -->
                                             </mat-select>
@@ -336,7 +345,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Uso del CFDI</mat-label>
-                                            <mat-select formControlName="usoDelCFDIAP" [disabled]="disableSelect.value" name="usoDelCFDIAP">
+                                            <mat-select formControlName="usoDelCFDIAP"  name="usoDelCFDIAP">
                                             <mat-option value="option1">Sin Efectos Fiscales</mat-option>
                                             <!-- <mat-option value="option2">Option 2</mat-option> -->
                                             </mat-select>
@@ -358,7 +367,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Estado</mat-label>
-                                            <mat-select formControlName="estadoAP" [disabled]="disableSelect.value" name="estadoAP">
+                                            <mat-select formControlName="estadoAP"  name="estadoAP">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
@@ -368,7 +377,7 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Municipio</mat-label>
-                                            <mat-select formControlName="municipioAP" [disabled]="disableSelect.value"  name="municipioAP">
+                                            <mat-select formControlName="municipioAP"   name="municipioAP">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
                                             </mat-select>
