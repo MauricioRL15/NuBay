@@ -4,7 +4,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketValidationComponentComponent } from '../ticket-validation-component/ticket-validation-component.component';
 import { ApiService } from '../../services/api.service';
-import { HttpClient } from '@angular/common/http';
+import {  HttpClientModule, HttpClient, HttpClientXsrfModule } from '@angular/common/http';
+
+import { RegimenFiscal } from '../../models/regimen-fiscal.model';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -86,7 +88,6 @@ export class GeneraFacturaComponentComponent implements OnInit{
     this.loadRegimenFiscalOptions();
     this.loadUsoCFDIOptions();
 
-
     this.buildFormAcreditarP();
   }
 
@@ -110,6 +111,16 @@ export class GeneraFacturaComponentComponent implements OnInit{
       tipoPersona: ['Fisica', Validators.required],
       email: this.emailFormControl
     });
+
+    this.formularioFisicaM.get('tipoPersona')?.valueChanges.subscribe(value => {
+      if (value === 'Fisica') {
+        this.loadRegimenFiscalOptionsPersonaFisica();
+      } else if (value === 'Moral') {
+        this.loadRegimenFiscalOptionsPersonaMoral();
+      }
+    });
+
+
   }
 
   loadRegimenFiscalOptions() {
@@ -124,8 +135,16 @@ export class GeneraFacturaComponentComponent implements OnInit{
     });
   }
 
-  trackByFn(index: number, item: any) {
-    return item.valor; // Track by regimen's valor property
+  loadRegimenFiscalOptionsPersonaFisica(){
+    this.apiService.getRegimenFiscalPersonaFisica().subscribe((data: RegimenFiscal[]) => {
+      this.regimenFiscalData = data.filter(regimen => regimen.cRF_AplicaFisica === true);
+    });
+  }
+
+  loadRegimenFiscalOptionsPersonaMoral(){
+    this.apiService.getRegimenFiscalPersonaMoral().subscribe((data: RegimenFiscal[]) => {
+      this.regimenFiscalData = data.filter(regimen => regimen.cRF_AplicaMoral === true);
+    });
   }
 
 

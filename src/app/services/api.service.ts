@@ -18,6 +18,21 @@ export class ApiService {
         catchError(this.handleError)
       );
   }
+
+  getRegimenFiscalPersonaFisica(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/regimen-fiscal?cRF_AplicaFisica=true`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getRegimenFiscalPersonaMoral(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/regimen-fiscal?cRF_AplicaMoral=true`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getUsoCFDI(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/uso-cfdi`)
       .pipe(
