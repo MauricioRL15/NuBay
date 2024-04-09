@@ -2,6 +2,7 @@
 const express = require('express');
 const usoCFDIRoute = require('./routes/usoCFDIRoute');
 const cRF_RegimenFiscalRoute = require('./routes/regimenFiscalRoutes');
+const estadoRoute = require('./routes/estadoRoute');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 // Rutas
 app.use('/', usoCFDIRoute);
 app.use('/', cRF_RegimenFiscalRoute);
+app.use('/', estadoRoute);
 
 // Manejo de errores
 app.use((err, req, res, next) => {
