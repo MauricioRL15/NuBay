@@ -47,10 +47,12 @@ export class GeneraFacturaGlobalComponent implements OnInit {
   totalEgresos: number = 0;
   totalIngresos: number = 0;
   
-  calcularTotal() {
-    // this.totalEgresos = this.dataSourceE.data.reduce((total, current) => total + current.monto, 0);
-    this.totalIngresos = this.dataSource.data.reduce((total, current) => total + current.montoI, 0);
-   
+  updateTotalIngresos(row: Ingresos) {
+    if (this.selection.isSelected(row)) {
+      this.totalIngresos -= row.montoI;
+    } else {
+      this.totalIngresos += row.montoI;
+    }
   }
   
   updateTotalEgresos(row: Egresos) {
@@ -83,25 +85,6 @@ export class GeneraFacturaGlobalComponent implements OnInit {
   }
 
 
-  /** Selecciona todas las filas si no están todas seleccionadas; en caso contrario borra la selección.*/
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-
-  toggleAllRowsE() {
-    if (this.isAllSelectedE()) {
-      this.selectionE.clear();
-      return;
-    }
-  
-    this.selectionE.select(...this.dataSourceE.data);
-  }
-
   /** La etiqueta para la casilla de verificación en la fila pasada */
   checkboxLabel(row?: Ingresos): string {
     if (!row) {
@@ -127,7 +110,7 @@ export class GeneraFacturaGlobalComponent implements OnInit {
   
   ngOnInit(): void {
     this.buildFormAcreditarP();
-    this.calcularTotal();
+    // this.calcularTotal();
   }
 
   private buildFormAcreditarP(){

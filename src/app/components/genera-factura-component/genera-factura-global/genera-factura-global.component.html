@@ -32,40 +32,37 @@
                         <!-- Checkbox Column -->
                         <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                                [checked]="selection.hasValue() && isAllSelected()"
-                                [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                [aria-label]="checkboxLabel()">
-                            </mat-checkbox>
+                            <span>Seleccionar</span>
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()"
-                                        (change)="$event ? selection.toggle(row) : null"
+                            <mat-checkbox (click)="$event.stopPropagation()" 
+                                        (change)="updateTotalIngresos(row)"
+                                        (change)="$event ? selection.toggle(row) : null" 
                                         [checked]="selection.isSelected(row)"
                                         [aria-label]="checkboxLabel(row)">
                             </mat-checkbox>
                         </td>
                         </ng-container>
                     
-                        <!-- Position Column -->
+                        <!-- Columna Ticket -->
                         <ng-container matColumnDef="ticketI">
                         <th mat-header-cell *matHeaderCellDef> Ticket </th>
                         <td mat-cell *matCellDef="let element"> {{element.ticketI}} </td>
                         </ng-container>
                     
-                        <!-- Name Column -->
+                        <!-- Columna Monto -->
                         <ng-container matColumnDef="montoI">
                         <th mat-header-cell *matHeaderCellDef> Monto </th>
                         <td mat-cell *matCellDef="let element">$ {{element.montoI}} </td>
                         </ng-container>
                     
-                        <!-- Weight Column -->
+                        <!-- Columna Fecha -->
                         <ng-container matColumnDef="fechaI">
                         <th mat-header-cell *matHeaderCellDef> Fecha </th>
                         <td mat-cell *matCellDef="let element"> {{element.fechaI}} </td>
                         </ng-container>
                     
-                        <!-- Symbol Column -->
+                        <!-- Columna Sucursal -->
                         <ng-container matColumnDef="sucursalI">
                         <th mat-header-cell *matHeaderCellDef> Sucursal </th>
                         <td mat-cell *matCellDef="let element"> {{element.sucursalI}} </td>
@@ -91,14 +88,11 @@
                         <!-- Checkbox Column -->
                         <ng-container matColumnDef="selectE">
                         <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? toggleAllRowsE() : null"
-                                [checked]="selectionE.hasValue() && isAllSelectedE()"
-                                [indeterminate]="selectionE.hasValue() && !isAllSelectedE()"
-                                [aria-label]="checkboxLabelE()">
-                            </mat-checkbox>
+                            <span>Seleccionar</span>
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation() "(change)="updateTotalEgresos(row)"
+                            <mat-checkbox (click)="$event.stopPropagation() "
+                                          (change)="updateTotalEgresos(row)"
                                           (change)="$event ? selectionE.toggle(row) : null"
                                           [checked]="selectionE.isSelected(row)"
                                           [aria-label]="checkboxLabelE(row)">
@@ -106,25 +100,21 @@
                         </td>                        
                         </ng-container>
                     
-                        <!-- Position Column -->
                         <ng-container matColumnDef="ticket">
                         <th mat-header-cell *matHeaderCellDef> Ticket </th>
                         <td mat-cell *matCellDef="let element"> {{element.ticket}} </td>
                         </ng-container>
                     
-                        <!-- Name Column -->
                         <ng-container matColumnDef="monto">
                         <th mat-header-cell *matHeaderCellDef> Monto </th>
                         <td mat-cell *matCellDef="let element"> $ {{element.monto}} </td>
                         </ng-container>
                     
-                        <!-- Weight Column -->
                         <ng-container matColumnDef="fecha">
                         <th mat-header-cell *matHeaderCellDef> Fecha </th>
                         <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
                         </ng-container>
                     
-                        <!-- Symbol Column -->
                         <ng-container matColumnDef="sucursal">
                         <th mat-header-cell *matHeaderCellDef> Sucursal </th>
                         <td mat-cell *matCellDef="let element"> {{element.sucursal}} </td>
@@ -171,7 +161,7 @@
                                     <mat-label>Régimen Fiscal</mat-label>
                                     <mat-select formControlName="regimenFiscalAP" [disabled]="disableSelect.value" name="regimenFiscalAP">
                                     <mat-option value="option1">Sin Obligaciones Fiscales</mat-option>
-                                    <!-- <mat-option value="option2">Option 2</mat-option> -->
+                                    
                                     </mat-select>
                                 </mat-form-field>
                             </mat-grid-tile>
@@ -181,7 +171,7 @@
                                     <mat-label>Uso del CFDI</mat-label>
                                     <mat-select formControlName="usoDelCFDIAP" [disabled]="disableSelect.value" name="usoDelCFDIAP">
                                     <mat-option value="option1">Sin Efectos Fiscales</mat-option>
-                                    <!-- <mat-option value="option2">Option 2</mat-option> -->
+                                    
                                     </mat-select>
                                 </mat-form-field>
                             </mat-grid-tile>
