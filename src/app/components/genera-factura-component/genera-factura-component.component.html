@@ -91,7 +91,9 @@
                                         <mat-form-field>
                                             <mat-label>Uso del CFDI</mat-label>
                                             <mat-select formControlName="usoDelCFDI"  name="usoDelCFDI">
-                                                <mat-option *ngFor="let uso of usoCFDI" [value]="uso.cUCFDI_Clave">{{ uso.cUCFDI_Clave }}</mat-option>
+                                                <mat-option *ngFor="let uso of usoCFDIData" [value]="uso.cUCFDI_Clave">
+                                                    {{ uso.cUCFDI_Clave }} - {{uso.cUCFDI_Descripcion}}
+                                                </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>

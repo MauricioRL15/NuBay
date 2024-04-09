@@ -4,19 +4,36 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Ingresos {
+  ticketI: number;
+  montoI: number;
+  fechaI: string;
+  sucursalI: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+export interface Egresos {
+  ticket: number;
+  monto: number;
+  fecha: string;
+  sucursal: string;
+}
+
+const ELEMENT_INGRESOS: Ingresos[] = [
+  {ticketI: 123, montoI: 3000, fechaI: '02/04/2024', sucursalI: 'Sucursal 1'},
+  {ticketI: 123, montoI: 3000, fechaI: '02/04/2024', sucursalI: 'Sucursal 2'},
+  {ticketI: 123, montoI: 3000, fechaI: '02/04/2024', sucursalI: 'Sucursal 3'},
 
 ];
+
+const ELEMENT_EGRESOS: Egresos[] = [
+  {ticket: 1, monto: 1200, fecha: '04/04/2024', sucursal: 'Sucursal 1'},
+  {ticket: 2, monto: 1300, fecha: '04/04/2024', sucursal: 'Sucursal 2'},
+  {ticket: 3, monto: 1500, fecha: '04/04/2024', sucursal: 'Sucursal 3'},
+
+];
+
+
+
 
 @Component({
   selector: 'app-genera-factura-global',
@@ -26,19 +43,47 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class GeneraFacturaGlobalComponent implements OnInit {
   
   // Tablas
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','select'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
 
+  totalEgresos: number = 0;
+  totalIngresos: number = 0;
+  
+  calcularTotal() {
+    // this.totalEgresos = this.dataSourceE.data.reduce((total, current) => total + current.monto, 0);
+    this.totalIngresos = this.dataSource.data.reduce((total, current) => total + current.montoI, 0);
+   
+  }
+  
+  updateTotalEgresos(row: Egresos) {
+    if (this.selectionE.isSelected(row)) {
+      this.totalEgresos -= row.monto;
+    } else {
+      this.totalEgresos += row.monto;
+    }
+  }
 
-  /** Whether the number of selected elements matches the total number of rows. */
+  displayedColumns: string[] = ['ticketI', 'montoI', 'fechaI', 'sucursalI','select'];
+  dataSource = new MatTableDataSource<Ingresos>(ELEMENT_INGRESOS);
+  selection = new SelectionModel<Ingresos>(true, []);
+
+  displayedColumnsE: string[] = ['ticket', 'monto', 'fecha', 'sucursal','selectE'];
+  dataSourceE = new MatTableDataSource<Egresos>(ELEMENT_EGRESOS);
+  selectionE = new SelectionModel<Egresos>(true, []);
+
+  /** Si el número de elementos seleccionados coincide con el número total de filas. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  isAllSelectedE() {
+    const numSelected = this.selectionE.selected.length;
+    const numRows = this.dataSourceE.data.length;
+    return numSelected === numRows;
+  }
+
+
+  /** Selecciona todas las filas si no están todas seleccionadas; en caso contrario borra la selección.*/
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -48,14 +93,33 @@ export class GeneraFacturaGlobalComponent implements OnInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  toggleAllRowsE() {
+    if (this.isAllSelectedE()) {
+      this.selectionE.clear();
+      return;
+    }
+  
+    this.selectionE.select(...this.dataSourceE.data);
+  }
+
+  /** La etiqueta para la casilla de verificación en la fila pasada */
+  checkboxLabel(row?: Ingresos): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.ticketI + 1}`;
   }
+
+  checkboxLabelE(row?: Egresos): string {
+    if (!row) {
+      return `${this.isAllSelectedE() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selectionE.isSelected(row) ? 'deselect' : 'select'} row ${row.ticket + 1}`;
+  }
+  
+
   // Termina tablas
+  
 
   formularioAcreditarP!: FormGroup;
 
@@ -63,6 +127,7 @@ export class GeneraFacturaGlobalComponent implements OnInit {
   
   ngOnInit(): void {
     this.buildFormAcreditarP();
+    this.calcularTotal();
   }
 
   private buildFormAcreditarP(){

@@ -40,6 +40,30 @@ export class ApiService {
       );
   }
 
+  getCFDIPersonaFisica(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/uso-cfdi?cUCFDI_AplicaFisica=true`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getCFDIPersonaMoral(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/uso-cfdi?cUCFDI_AplicaMoral=true`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
+  getUsoCFDIBasedOnRegimenFiscalAndPersona(tipoPersona: string, regimenFiscalId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/uso-cfdi?tipoPersona=${tipoPersona}&regimenFiscalId=${regimenFiscalId}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  
+
+
 
   private handleError(error: any): Observable<any> {
     console.error('Error en la solicitud:', error);

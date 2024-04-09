@@ -7,6 +7,7 @@ import { ApiService } from '../../services/api.service';
 import {  HttpClientModule, HttpClient, HttpClientXsrfModule } from '@angular/common/http';
 
 import { RegimenFiscal } from '../../models/regimen-fiscal.model';
+import { UsoCFDI } from '../../models/uso-cfdi.model';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -20,7 +21,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
   regimenFiscalData: any[] = [];
  
   
-  usoCFDI: any[] = [];
+  usoCFDIData: any[] = [];
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -86,7 +87,10 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
     this.buildFormFisicaM();
     this.loadRegimenFiscalOptions();
+
     this.loadUsoCFDIOptions();
+    this.loadCFDIOptionsPersonaFisica();
+    
 
     this.buildFormAcreditarP();
   }
@@ -115,10 +119,23 @@ export class GeneraFacturaComponentComponent implements OnInit{
     this.formularioFisicaM.get('tipoPersona')?.valueChanges.subscribe(value => {
       if (value === 'Fisica') {
         this.loadRegimenFiscalOptionsPersonaFisica();
+        this.loadCFDIOptionsPersonaFisica();
       } else if (value === 'Moral') {
         this.loadRegimenFiscalOptionsPersonaMoral();
+        this.loadCFDIOptionsPersonaMoral();
       }
     });
+
+    //trato de obtener el valor de Regimen Fiscal
+    this.formularioFisicaM.get('regimenFiscal')?.valueChanges.subscribe(value => {
+      const tipoPersona = this.formularioFisicaM.get('tipoPersona')?.value;
+      if (tipoPersona === 'Fisica') {
+        this.filterCFDIOptionsPersonaFisica(value);
+      } else if (tipoPersona === 'Moral') {
+        this.filterCFDIOptionsPersonaMoral(value);
+      }
+    });
+
 
 
   }
@@ -128,13 +145,6 @@ export class GeneraFacturaComponentComponent implements OnInit{
       this.regimenFiscalData = data;
     });
   }
-
-  loadUsoCFDIOptions() {
-    this.apiService.getUsoCFDI().subscribe(data => {
-      this.usoCFDI = data;
-    });
-  }
-
   loadRegimenFiscalOptionsPersonaFisica(){
     this.apiService.getRegimenFiscalPersonaFisica().subscribe((data: RegimenFiscal[]) => {
       this.regimenFiscalData = data.filter(regimen => regimen.cRF_AplicaFisica === true);
@@ -147,8 +157,45 @@ export class GeneraFacturaComponentComponent implements OnInit{
     });
   }
 
+  
+
+  loadUsoCFDIOptions() {
+    this.apiService.getUsoCFDI().subscribe(data => {
+      this.usoCFDIData = data;
+    });
+  }
+
+
+  loadCFDIOptionsPersonaFisica(){
+    this.apiService.getCFDIPersonaFisica().subscribe((data: UsoCFDI[]) => {
+      this.usoCFDIData = data.filter(uso => uso.cUCFDI_AplicaFisica === true);
+    });
+  }
+
+  loadCFDIOptionsPersonaMoral(){
+    this.apiService.getCFDIPersonaMoral().subscribe((data: UsoCFDI[]) => {
+      this.usoCFDIData = data.filter(uso => uso.cUCFDI_AplicaMoral === true);
+    });
+  }
+  
+  // Función para filtrar los CFDI disponibles para una persona física basada en el régimen fiscal seleccionado
+  filterCFDIOptionsPersonaFisica(regimenFiscal: number) {
+    this.apiService.getCFDIPersonaFisica().subscribe((data: UsoCFDI[]) => {
+      this.usoCFDIData = data.filter(uso => uso.cUCFDI_AplicaFisica === true && uso.cUCFDI_RegimenFiscalReceptor.includes(regimenFiscal.toString()));
+    });
+  }
+
+  // Función para filtrar los CFDI disponibles para una persona moral basada en el régimen fiscal seleccionado
+  filterCFDIOptionsPersonaMoral(regimenFiscal: number) {
+    this.apiService.getCFDIPersonaMoral().subscribe((data: UsoCFDI[]) => {
+      this.usoCFDIData = data.filter(uso => uso.cUCFDI_AplicaMoral === true && uso.cUCFDI_RegimenFiscalReceptor.includes(regimenFiscal.toString()));
+    });
+  }
+
 
   //Form de primer pestaña
+
+
 
   //Segundo Formulario
   private buildFormExtranjero(){
