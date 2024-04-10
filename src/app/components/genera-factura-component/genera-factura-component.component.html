@@ -113,9 +113,14 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Estado</mat-label>
-                                            <mat-select formControlName="estado"  name="estado">
+                                            <!-- <mat-select formControlName="estado"  name="estado">
                                             <mat-option value="option1">Option 1</mat-option>
                                             <mat-option value="option2">Option 2</mat-option>
+                                            </mat-select> -->
+                                            <mat-select formControlName="estado"  name="estado">
+                                                <mat-option *ngFor="let edo of EstadosData" [value]="edo.PK_cEDO_Estado_ClaveEntidad01">
+                                                    {{ edo.cEDO_NombreEntidad }} 
+                                                </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>

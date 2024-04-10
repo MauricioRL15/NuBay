@@ -12,6 +12,8 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+
+  //Regimen Fiscal:
   getRegimenFiscal(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/regimen-fiscal`)
       .pipe(
@@ -32,6 +34,8 @@ export class ApiService {
         catchError(this.handleError)
       );
   }
+
+  //Uso de CFDI:
 
   getUsoCFDI(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/uso-cfdi`)
@@ -54,7 +58,6 @@ export class ApiService {
       );
   }
 
-
   getUsoCFDIBasedOnRegimenFiscalAndPersona(tipoPersona: string, regimenFiscalId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/uso-cfdi?tipoPersona=${tipoPersona}&regimenFiscalId=${regimenFiscalId}`)
       .pipe(
@@ -62,7 +65,14 @@ export class ApiService {
       );
   }
   
+  //Estados:
 
+  getEstados(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/estados`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
 
   private handleError(error: any): Observable<any> {

@@ -18,18 +18,18 @@ import { UsoCFDI } from '../../models/uso-cfdi.model';
 export class GeneraFacturaComponentComponent implements OnInit{
   // Primer pestaña
   formularioFisicaM!: FormGroup;
+
   regimenFiscalData: any[] = [];
- 
-  
+  EstadosData: any[] = [];
   usoCFDIData: any[] = [];
 
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
+
   typeperson: string[] = ['Fisica', 'Moral'];
   ticketNumber!:string;
-  // ticketExists: boolean = false;
   matcher = new MyErrorStateMatcher();
 
 
@@ -49,8 +49,6 @@ export class GeneraFacturaComponentComponent implements OnInit{
   // Segunda pestaña
   formularioExtranjero!: FormGroup;
   ticketNumberE!: string;
-
-
 
   submitExtranjero(){
     if (this.formularioExtranjero.valid) {
@@ -90,6 +88,8 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
     this.loadUsoCFDIOptions();
     this.loadCFDIOptionsPersonaFisica();
+
+    this.loadEstadosOptions();
     
 
     this.buildFormAcreditarP();
@@ -140,11 +140,22 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   }
 
+    //Estados
+
+  loadEstadosOptions() {
+    this.apiService.getEstados().subscribe(data => {
+      this.EstadosData = data;
+    });
+  }
+
+    //Reguimen Fiscal
+
   loadRegimenFiscalOptions() {
     this.apiService.getRegimenFiscal().subscribe(data => {
       this.regimenFiscalData = data;
     });
   }
+
   loadRegimenFiscalOptionsPersonaFisica(){
     this.apiService.getRegimenFiscalPersonaFisica().subscribe((data: RegimenFiscal[]) => {
       this.regimenFiscalData = data.filter(regimen => regimen.cRF_AplicaFisica === true);
@@ -157,14 +168,13 @@ export class GeneraFacturaComponentComponent implements OnInit{
     });
   }
 
-  
+    //CFDI
 
   loadUsoCFDIOptions() {
     this.apiService.getUsoCFDI().subscribe(data => {
       this.usoCFDIData = data;
     });
   }
-
 
   loadCFDIOptionsPersonaFisica(){
     this.apiService.getCFDIPersonaFisica().subscribe((data: UsoCFDI[]) => {
