@@ -19,11 +19,9 @@ export interface ConsultaFactura {
 }
 
 const ELEMENT_DATA: ConsultaFactura[] = [
-  {ticket: 1223, rfc: 'XAXX 010101 000', fecha: '28/03/24', descargar: 'H'},
-  {ticket: 1224, rfc: 'XAXX 010101 000', fecha: '27/03/24', descargar: 'He'},
+  {ticket: 1223, rfc: 'XAXX 010101 000', fecha: '28/03/24', descargar: ''},
+  {ticket: 1224, rfc: 'XAXX 010101 000', fecha: '27/03/24', descargar: ''},
 ];
-
-
 
 @Component({
   selector: 'app-consulta-factura-component',
@@ -34,10 +32,8 @@ export class ConsultaFacturaComponentComponent {
 
   formularioConsultaFactura!: FormGroup;
   ticketNumber:string='';
-
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
-  
   displayedColumns: string[] = ['ticket', 'rfc', 'fecha', 'descargar'];
   dataSource = ELEMENT_DATA;
 
@@ -46,14 +42,12 @@ export class ConsultaFacturaComponentComponent {
   ngOnInit(): void {
     this.buildFormConsulta();
   }
-
   private buildFormConsulta(){
     this.formularioConsultaFactura = this.formBuilder.group({
       ticketNumber: [{ value: '', disabled: false }, Validators.required],
       email: this.emailFormControl
     });
   }
-
   onSubmit( ) {
     if (this.formularioConsultaFactura.valid) {
       const formData = this.formularioConsultaFactura.value;
@@ -64,8 +58,6 @@ export class ConsultaFacturaComponentComponent {
       alert('Por favor, completa el formulario correctamente antes de enviarlo.');
     }
   }
-
-
   openValidationModal(): void {
     const ticketNumberControl = this.formularioConsultaFactura.get('ticketNumber');
     const ticketNumberValue = ticketNumberControl ? ticketNumberControl.value : null;
@@ -82,5 +74,4 @@ export class ConsultaFacturaComponentComponent {
       }
     });
   }
-
 }

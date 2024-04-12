@@ -112,14 +112,16 @@
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         <mat-form-field>
-                                            <mat-label>Estado</mat-label>
-                                            <!-- <mat-select formControlName="estado"  name="estado">
-                                            <mat-option value="option1">Option 1</mat-option>
-                                            <mat-option value="option2">Option 2</mat-option>
-                                            </mat-select> -->
+                                            <!-- <mat-label>Estado</mat-label>
                                             <mat-select formControlName="estado"  name="estado">
                                                 <mat-option *ngFor="let edo of EstadosData" [value]="edo.PK_cEDO_Estado_ClaveEntidad01">
-                                                    {{ edo.cEDO_NombreEntidad }} 
+                                                    {{ edo.cEDO_NombreEntidad }}
+                                                </mat-option>
+                                            </mat-select> -->
+                                            <mat-label>Estado</mat-label>
+                                            <mat-select formControlName="estado"  name="estado">
+                                                <mat-option *ngFor="let estado of estadoCP" [value]="estado">
+                                                    {{ estado }} 
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -127,9 +129,10 @@
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Municipio</mat-label>
-                                            <mat-select formControlName="municipio"   name="municipio">
-                                            <mat-option value="option1">Option 1</mat-option>
-                                            <mat-option value="option2">Option 2</mat-option>
+                                            <mat-select formControlName="municipio" name="municipio">
+                                                <mat-option *ngFor="let municipio of EstadosMunicipiosData" [value]="municipio">
+                                                     {{ municipio }} 
+                                                </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
@@ -224,7 +227,7 @@
                                             <input matInput formControlName="nombreE" name="nombreE" required>
                                         </mat-form-field>
                                     </mat-grid-tile>
-                                    
+                                    <!-- Segunda Pestaña -->
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Régimen Fiscal</mat-label>
@@ -244,12 +247,10 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                 </mat-grid-list>
                             </div>
                             <div>
                                 <mat-grid-list cols="4" rowHeight="80px" >
-                                    
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>País</mat-label>
@@ -259,7 +260,6 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                     <mat-grid-tile>
                                         <mat-form-field appearance="fill" class="form">
                                             <mat-label>ID (Pasaporte)</mat-label>
@@ -321,34 +321,28 @@
                                             <input matInput formControlName="rfcAP" name="rfcAP" required>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                     <mat-grid-tile>
                                         <mat-form-field appearance="fill" class="form">
                                             <mat-label>Nombre</mat-label>
                                             <input matInput formControlName="nombreAP" name="nombreAP" required>
                                         </mat-form-field>
                                     </mat-grid-tile>
-                                    
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Régimen Fiscal</mat-label>
                                             <mat-select formControlName="regimenFiscalAP"  name="regimenFiscalAP">
                                             <mat-option value="option1">Sin Obligaciones Fiscales</mat-option>
-                                            <!-- <mat-option value="option2">Option 2</mat-option> -->
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Uso del CFDI</mat-label>
                                             <mat-select formControlName="usoDelCFDIAP"  name="usoDelCFDIAP">
                                             <mat-option value="option1">Sin Efectos Fiscales</mat-option>
-                                            <!-- <mat-option value="option2">Option 2</mat-option> -->
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                 </mat-grid-list>
                             </div>
                             <div>
@@ -360,7 +354,6 @@
                                             <input matInput formControlName="codigoPostalAP" name="codigoPostalAP" required>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Estado</mat-label>
@@ -370,7 +363,6 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-                                    
                                     <mat-grid-tile>
                                         <mat-form-field>
                                             <mat-label>Municipio</mat-label>
@@ -380,14 +372,12 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
-
                                     <mat-grid-tile>
                                         <mat-form-field appearance="fill" class="form">
                                             <mat-label>Colonia</mat-label>
                                             <input matInput formControlName="coloniaAP" name="coloniaAP" required>
                                         </mat-form-field>
                                     </mat-grid-tile>
-                                    
                                 </mat-grid-list>
                             </div>
                             <div>

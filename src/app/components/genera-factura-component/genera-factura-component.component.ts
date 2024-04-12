@@ -4,10 +4,11 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TicketValidationComponentComponent } from '../ticket-validation-component/ticket-validation-component.component';
 import { ApiService } from '../../services/api.service';
-import {  HttpClientModule, HttpClient, HttpClientXsrfModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { RegimenFiscal } from '../../models/regimen-fiscal.model';
 import { UsoCFDI } from '../../models/uso-cfdi.model';
+import { COPOMEXService } from '../../services/copomex.service';
 
 @Component({
   selector: 'app-genera-factura-component',
@@ -21,7 +22,14 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   regimenFiscalData: any[] = [];
   EstadosData: any[] = [];
+  EstadosMunicipiosData: any[] = [];
   usoCFDIData: any[] = [];
+
+  //Datos a partir del Código Postal
+  municipioCP: any[] = [];
+  estadoCP: any[] = [];
+
+
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -78,20 +86,18 @@ export class GeneraFacturaComponentComponent implements OnInit{
 
   //termina tercer pestaña
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private apiService: ApiService, private http: HttpClient,) {}
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private apiService: ApiService, private http: HttpClient, private copomex: COPOMEXService) {}
 
   ngOnInit(): void {
     this.buildFormExtranjero();
-
     this.buildFormFisicaM();
-    this.loadRegimenFiscalOptions();
-
+    this.loadRegimenFiscalOptionsPersonaFisica();
+    // this.loadRegimenFiscalOptions();
     this.loadUsoCFDIOptions();
     this.loadCFDIOptionsPersonaFisica();
-
     this.loadEstadosOptions();
-    
-
+    this.loadEstadosMunicipioOptions();
+    this.loadEstadosOptionsCOPOMEX();
     this.buildFormAcreditarP();
   }
 
@@ -107,7 +113,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
       usoDelCFDI: [{ value: '', disabled: false }],
       cp: [{ value: '', disabled: false }, Validators.required],
       estado: [{ value: '', disabled: false }, Validators.required],
-      municipio: [{ value: '', disabled: false }, Validators.required],
+      municipio: [{ value: '', disabled: false }],
       colonia: [{ value: '', disabled: false }, Validators.required],
       calle: [{ value: '', disabled: false }, Validators.required],
       numE: [{ value: '', disabled: false }, Validators.required],
@@ -123,22 +129,59 @@ export class GeneraFacturaComponentComponent implements OnInit{
       } else if (value === 'Moral') {
         this.loadRegimenFiscalOptionsPersonaMoral();
         this.loadCFDIOptionsPersonaMoral();
+        console.log("EstadosMunicipiosData:", this.estadoCP);
       }
     });
 
-    //trato de obtener el valor de Regimen Fiscal
     this.formularioFisicaM.get('regimenFiscal')?.valueChanges.subscribe(value => {
       const tipoPersona = this.formularioFisicaM.get('tipoPersona')?.value;
       if (tipoPersona === 'Fisica') {
         this.filterCFDIOptionsPersonaFisica(value);
       } else if (tipoPersona === 'Moral') {
         this.filterCFDIOptionsPersonaMoral(value);
+        
       }
     });
+    //obtener el valor del codigo postal
 
-
-
+    this.formularioFisicaM.get('cp')?.valueChanges.subscribe((value) => {
+      this.onCPChange(value);
+    });
   }
+
+    onCPChange(cp: string) {
+      if (cp.length === 5) {
+        this.copomex.getInfoCodigoPostal(cp).subscribe(
+          (data) => {
+            // Estados
+            this.formularioFisicaM.get('estado')?.setValue(data[0].response.estado);
+            this.estadoCP = data
+            .map((item: any) => item.response.estado) 
+            .filter((value: string, index: number, self: string[]) => self.indexOf(value) === index); 
+            console.log(this.estadoCP);
+            
+            // Municipios
+            this.formularioFisicaM.get('municipio')?.setValue(data[0].response.municipio);
+            this.EstadosMunicipiosData = data
+            .map((item: any) => item.response.municipio) // Extraer los municipios
+            .filter((value: string, index: number, self: string[]) => self.indexOf(value) === index); // Filtrar elementos únicos
+            console.log(this.EstadosMunicipiosData);
+            
+          },
+          (error) => {
+            console.error('Error al obtener información del código postal:', error);
+          }
+        );
+      }
+    }
+
+    
+
+
+
+
+
+
 
     //Estados
 
@@ -148,13 +191,27 @@ export class GeneraFacturaComponentComponent implements OnInit{
     });
   }
 
-    //Reguimen Fiscal
-
-  loadRegimenFiscalOptions() {
-    this.apiService.getRegimenFiscal().subscribe(data => {
-      this.regimenFiscalData = data;
+  loadEstadosOptionsCOPOMEX() {
+    this.copomex.getEstado().subscribe(data => {
+      this.estadoCP = data.response.estado;
     });
   }
+
+  loadEstadosMunicipioOptions() {
+    this.copomex.getEstadosMunicipios().subscribe(data => {
+      this.EstadosMunicipiosData = data.response.municipios;
+    });
+  }
+
+  
+
+    //Reguimen Fiscal
+
+  // loadRegimenFiscalOptions() {
+  //   this.apiService.getRegimenFiscal().subscribe(data => {
+  //     this.regimenFiscalData = data;
+  //   });
+  // }
 
   loadRegimenFiscalOptionsPersonaFisica(){
     this.apiService.getRegimenFiscalPersonaFisica().subscribe((data: RegimenFiscal[]) => {
