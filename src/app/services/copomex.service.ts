@@ -24,7 +24,15 @@ export class COPOMEXService {
       );
   }
 
+  //Obtener Colonia por Municipio
+  getColonia(municipio: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/get_colonia_por_municipio/${municipio}?token=${this.tokenPruebas}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
+  //Obtiene todo los estados
   getEstado(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/get_estados?token=${this.tokenPruebas}`)
       .pipe(
@@ -32,9 +40,7 @@ export class COPOMEXService {
       );
   }
 
-  // 73080
-  // 73200
-  
+  //Obtine los municipios a partir del estado seleccionado
   getEstadosMunicipios(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/get_municipio_por_estado/Puebla?token=${this.tokenPruebas}`)
       .pipe(

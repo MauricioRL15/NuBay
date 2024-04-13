@@ -137,9 +137,17 @@
                                         </mat-form-field>
                                     </mat-grid-tile>
                                     <mat-grid-tile>
-                                        <mat-form-field appearance="fill">
+                                        <!-- <mat-form-field appearance="fill">
                                             <mat-label>Colonia</mat-label>
                                             <input matInput formControlName="colonia" name="colonia" required>
+                                        </mat-form-field> -->
+                                        <mat-form-field>
+                                            <mat-label>Colonia</mat-label>
+                                                <mat-select formControlName="colonia" name="colonia">
+                                                    <mat-option *ngFor="let colonia of coloniaData" [value]="colonia">
+                                                        {{ colonia }} 
+                                                    </mat-option>
+                                            </mat-select>
                                         </mat-form-field>
                                     </mat-grid-tile>
                                 </mat-grid-list>

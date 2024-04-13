@@ -28,6 +28,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
   //Datos a partir del Código Postal
   municipioCP: any[] = [];
   estadoCP: any[] = [];
+  coloniaData: any[] = [];
 
 
 
@@ -147,6 +148,12 @@ export class GeneraFacturaComponentComponent implements OnInit{
     this.formularioFisicaM.get('cp')?.valueChanges.subscribe((value) => {
       this.onCPChange(value);
     });
+
+    //obtener el valor del municipo
+    this.formularioFisicaM.get('municipio')?.valueChanges.subscribe((value) => {
+      this.onCPChangeMunicipio(value);
+    });
+
   }
 
     onCPChange(cp: string) {
@@ -174,7 +181,19 @@ export class GeneraFacturaComponentComponent implements OnInit{
         );
       }
     }
-
+  //Colonias
+  onCPChangeMunicipio(municipio: string) {
+    if (municipio) {
+      this.copomex.getColonia(municipio).subscribe(
+        (data) => {
+          this.coloniaData = data.response.colonia;
+        },
+        (error) => {
+          console.error('Error al obtener información de las colonias:', error);
+        }
+      );
+    }
+  }
     
 
 
@@ -204,7 +223,7 @@ export class GeneraFacturaComponentComponent implements OnInit{
   }
 
   
-
+  
     //Reguimen Fiscal
 
   // loadRegimenFiscalOptions() {
